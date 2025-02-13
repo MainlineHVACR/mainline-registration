@@ -1,0 +1,129 @@
+import React, { useState } from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+
+const ProductRegistration = () => {
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    address: "",
+    city: "",
+    province: "",
+    postalCode: "",
+    model: "",
+    serialNumber: "",
+    purchaseDate: "",
+    retailer: "",
+    invoice: null,
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleFileChange = (e) => {
+    setFormData((prev) => ({ ...prev, invoice: e.target.files[0] }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    const formDataToSend = new FormData();
+    Object.keys(formData).forEach((key) => {
+      formDataToSend.append(key, formData[key]);
+    });
+
+    try {
+      const response = await fetch("https://mainline-backend.onrender.com/api/register", {
+        method: "POST",
+        body: formDataToSend,
+      });
+      if (response.ok) {
+        alert("Registration successful!");
+      } else {
+        alert("Registration failed. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      alert("An error occurred. Please try again later.");
+    }
+  };
+
+  return (
+    <div className="flex justify-center items-center min-h-screen bg-gray-100 p-4">
+      <Card className="w-full max-w-2xl p-6 bg-white shadow-lg rounded-2xl">
+        <CardContent>
+          <h2 className="text-2xl font-bold mb-4 text-center text-blue-600">Mainline Product Registration</h2>
+          <form onSubmit={handleSubmit} className="grid gap-4">
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <Label>First Name</Label>
+                <Input name="firstName" value={formData.firstName} onChange={handleChange} required />
+              </div>
+              <div>
+                <Label>Last Name</Label>
+                <Input name="lastName" value={formData.lastName} onChange={handleChange} required />
+              </div>
+            </div>
+            <div>
+              <Label>Email</Label>
+              <Input type="email" name="email" value={formData.email} onChange={handleChange} required />
+            </div>
+            <div>
+              <Label>Phone Number</Label>
+              <Input type="tel" name="phone" value={formData.phone} onChange={handleChange} required />
+            </div>
+            <div>
+              <Label>Address</Label>
+              <Input name="address" value={formData.address} onChange={handleChange} required />
+            </div>
+            <div className="grid grid-cols-3 gap-4">
+              <div>
+                <Label>City</Label>
+                <Input name="city" value={formData.city} onChange={handleChange} required />
+              </div>
+              <div>
+                <Label>Province</Label>
+                <Input name="province" value={formData.province} onChange={handleChange} required />
+              </div>
+              <div>
+                <Label>Postal Code</Label>
+                <Input name="postalCode" value={formData.postalCode} onChange={handleChange} required />
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <Label>Model Number</Label>
+                <Input name="model" value={formData.model} onChange={handleChange} required />
+              </div>
+              <div>
+                <Label>Serial Number</Label>
+                <Input name="serialNumber" value={formData.serialNumber} onChange={handleChange} required />
+              </div>
+            </div>
+            <div>
+              <Label>Purchase Date</Label>
+              <Input type="date" name="purchaseDate" value={formData.purchaseDate} onChange={handleChange} required />
+            </div>
+            <div>
+              <Label>Retailer Name</Label>
+              <Input name="retailer" value={formData.retailer} onChange={handleChange} required />
+            </div>
+            <div>
+              <Label>Upload Invoice (Optional)</Label>
+              <Input type="file" name="invoice" onChange={handleFileChange} />
+            </div>
+            <Button type="submit" className="bg-blue-600 text-white py-2 rounded-lg">Submit</Button>
+          </form>
+        </CardContent>
+      </Card>
+    </div>
+  );
+};
+
+export default ProductRegistration;
