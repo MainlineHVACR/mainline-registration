@@ -1,0 +1,336 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=Generator content="Microsoft Word 15 (filtered)">
+<style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Aptos;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:8.0pt;
+	margin-left:0cm;
+	line-height:115%;
+	font-size:12.0pt;
+	font-family:"Aptos",sans-serif;}
+.MsoChpDefault
+	{font-family:"Aptos",sans-serif;}
+.MsoPapDefault
+	{margin-bottom:8.0pt;
+	line-height:115%;}
+@page WordSection1
+	{size:612.0pt 792.0pt;
+	margin:72.0pt 72.0pt 72.0pt 72.0pt;}
+div.WordSection1
+	{page:WordSection1;}
+-->
+</style>
+
+</head>
+
+<body lang=EN-CA style='word-wrap:break-word'>
+
+<div class=WordSection1>
+
+<p class=MsoNormal>import React, { useState } from &quot;react&quot;;</p>
+
+<p class=MsoNormal>import { Card, CardContent } from
+&quot;@/components/ui/card&quot;;</p>
+
+<p class=MsoNormal>import { Button } from &quot;@/components/ui/button&quot;;</p>
+
+<p class=MsoNormal>import { Input } from &quot;@/components/ui/input&quot;;</p>
+
+<p class=MsoNormal>import { Label } from &quot;@/components/ui/label&quot;;</p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoNormal>const ProductRegistration = () =&gt; {</p>
+
+<p class=MsoNormal>  const [formData, setFormData] = useState({</p>
+
+<p class=MsoNormal>    firstName: &quot;&quot;,</p>
+
+<p class=MsoNormal>    lastName: &quot;&quot;,</p>
+
+<p class=MsoNormal>    email: &quot;&quot;,</p>
+
+<p class=MsoNormal>    phone: &quot;&quot;,</p>
+
+<p class=MsoNormal>    address: &quot;&quot;,</p>
+
+<p class=MsoNormal>    city: &quot;&quot;,</p>
+
+<p class=MsoNormal>    province: &quot;&quot;,</p>
+
+<p class=MsoNormal>    postalCode: &quot;&quot;,</p>
+
+<p class=MsoNormal>    model: &quot;&quot;,</p>
+
+<p class=MsoNormal>    serialNumber: &quot;&quot;,</p>
+
+<p class=MsoNormal>    purchaseDate: &quot;&quot;,</p>
+
+<p class=MsoNormal>    retailer: &quot;&quot;,</p>
+
+<p class=MsoNormal>    invoice: null,</p>
+
+<p class=MsoNormal>  });</p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoNormal>  const handleChange = (e) =&gt; {</p>
+
+<p class=MsoNormal>    const { name, value } = e.target;</p>
+
+<p class=MsoNormal>    setFormData((prev) =&gt; ({ ...prev, [name]: value }));</p>
+
+<p class=MsoNormal>  };</p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoNormal>  const handleFileChange = (e) =&gt; {</p>
+
+<p class=MsoNormal>    setFormData((prev) =&gt; ({ ...prev, invoice:
+e.target.files[0] }));</p>
+
+<p class=MsoNormal>  };</p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoNormal>  const handleSubmit = async (e) =&gt; {</p>
+
+<p class=MsoNormal>    e.preventDefault();</p>
+
+<p class=MsoNormal>    </p>
+
+<p class=MsoNormal>    const formDataToSend = new FormData();</p>
+
+<p class=MsoNormal>    Object.keys(formData).forEach((key) =&gt; {</p>
+
+<p class=MsoNormal>      formDataToSend.append(key, formData[key]);</p>
+
+<p class=MsoNormal>    });</p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoNormal>    try {</p>
+
+<p class=MsoNormal>      const response = await
+fetch(&quot;https://mainline-backend.onrender.com/api/register&quot;, {</p>
+
+<p class=MsoNormal>        method: &quot;POST&quot;,</p>
+
+<p class=MsoNormal>        body: formDataToSend,</p>
+
+<p class=MsoNormal>      });</p>
+
+<p class=MsoNormal>      if (response.ok) {</p>
+
+<p class=MsoNormal>        alert(&quot;Registration successful!&quot;);</p>
+
+<p class=MsoNormal>      } else {</p>
+
+<p class=MsoNormal>        alert(&quot;Registration failed. Please try
+again.&quot;);</p>
+
+<p class=MsoNormal>      }</p>
+
+<p class=MsoNormal>    } catch (error) {</p>
+
+<p class=MsoNormal>      console.error(&quot;Error submitting form:&quot;,
+error);</p>
+
+<p class=MsoNormal>      alert(&quot;An error occurred. Please try again
+later.&quot;);</p>
+
+<p class=MsoNormal>    }</p>
+
+<p class=MsoNormal>  };</p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoNormal>  return (</p>
+
+<p class=MsoNormal>    &lt;div className=&quot;flex justify-center items-center
+min-h-screen bg-gray-100 p-4&quot;&gt;</p>
+
+<p class=MsoNormal>      &lt;Card className=&quot;w-full max-w-2xl p-6 bg-white
+shadow-lg rounded-2xl&quot;&gt;</p>
+
+<p class=MsoNormal>        &lt;CardContent&gt;</p>
+
+<p class=MsoNormal>          &lt;h2 className=&quot;text-2xl font-bold mb-4
+text-center text-blue-600&quot;&gt;Mainline Product Registration&lt;/h2&gt;</p>
+
+<p class=MsoNormal>          &lt;form onSubmit={handleSubmit}
+className=&quot;grid gap-4&quot;&gt;</p>
+
+<p class=MsoNormal>            &lt;div className=&quot;grid grid-cols-2
+gap-4&quot;&gt;</p>
+
+<p class=MsoNormal>              &lt;div&gt;</p>
+
+<p class=MsoNormal>                &lt;Label&gt;First Name&lt;/Label&gt;</p>
+
+<p class=MsoNormal>                &lt;Input name=&quot;firstName&quot;
+value={formData.firstName} onChange={handleChange} required /&gt;</p>
+
+<p class=MsoNormal>              &lt;/div&gt;</p>
+
+<p class=MsoNormal>              &lt;div&gt;</p>
+
+<p class=MsoNormal>                &lt;Label&gt;Last Name&lt;/Label&gt;</p>
+
+<p class=MsoNormal>                &lt;Input name=&quot;lastName&quot;
+value={formData.lastName} onChange={handleChange} required /&gt;</p>
+
+<p class=MsoNormal>              &lt;/div&gt;</p>
+
+<p class=MsoNormal>            &lt;/div&gt;</p>
+
+<p class=MsoNormal>            &lt;div&gt;</p>
+
+<p class=MsoNormal>              &lt;Label&gt;Email&lt;/Label&gt;</p>
+
+<p class=MsoNormal>              &lt;Input type=&quot;email&quot;
+name=&quot;email&quot; value={formData.email} onChange={handleChange} required
+/&gt;</p>
+
+<p class=MsoNormal>            &lt;/div&gt;</p>
+
+<p class=MsoNormal>            &lt;div&gt;</p>
+
+<p class=MsoNormal>              &lt;Label&gt;Phone Number&lt;/Label&gt;</p>
+
+<p class=MsoNormal>              &lt;Input type=&quot;tel&quot;
+name=&quot;phone&quot; value={formData.phone} onChange={handleChange} required
+/&gt;</p>
+
+<p class=MsoNormal>            &lt;/div&gt;</p>
+
+<p class=MsoNormal>            &lt;div&gt;</p>
+
+<p class=MsoNormal>              &lt;Label&gt;Address&lt;/Label&gt;</p>
+
+<p class=MsoNormal>              &lt;Input name=&quot;address&quot;
+value={formData.address} onChange={handleChange} required /&gt;</p>
+
+<p class=MsoNormal>            &lt;/div&gt;</p>
+
+<p class=MsoNormal>            &lt;div className=&quot;grid grid-cols-3
+gap-4&quot;&gt;</p>
+
+<p class=MsoNormal>              &lt;div&gt;</p>
+
+<p class=MsoNormal>                &lt;Label&gt;City&lt;/Label&gt;</p>
+
+<p class=MsoNormal>                &lt;Input name=&quot;city&quot;
+value={formData.city} onChange={handleChange} required /&gt;</p>
+
+<p class=MsoNormal>              &lt;/div&gt;</p>
+
+<p class=MsoNormal>              &lt;div&gt;</p>
+
+<p class=MsoNormal>                &lt;Label&gt;Province&lt;/Label&gt;</p>
+
+<p class=MsoNormal>                &lt;Input name=&quot;province&quot;
+value={formData.province} onChange={handleChange} required /&gt;</p>
+
+<p class=MsoNormal>              &lt;/div&gt;</p>
+
+<p class=MsoNormal>              &lt;div&gt;</p>
+
+<p class=MsoNormal>                &lt;Label&gt;Postal Code&lt;/Label&gt;</p>
+
+<p class=MsoNormal>                &lt;Input name=&quot;postalCode&quot;
+value={formData.postalCode} onChange={handleChange} required /&gt;</p>
+
+<p class=MsoNormal>              &lt;/div&gt;</p>
+
+<p class=MsoNormal>            &lt;/div&gt;</p>
+
+<p class=MsoNormal>            &lt;div className=&quot;grid grid-cols-2
+gap-4&quot;&gt;</p>
+
+<p class=MsoNormal>              &lt;div&gt;</p>
+
+<p class=MsoNormal>                &lt;Label&gt;Model Number&lt;/Label&gt;</p>
+
+<p class=MsoNormal>                &lt;Input name=&quot;model&quot;
+value={formData.model} onChange={handleChange} required /&gt;</p>
+
+<p class=MsoNormal>              &lt;/div&gt;</p>
+
+<p class=MsoNormal>              &lt;div&gt;</p>
+
+<p class=MsoNormal>                &lt;Label&gt;Serial Number&lt;/Label&gt;</p>
+
+<p class=MsoNormal>                &lt;Input name=&quot;serialNumber&quot;
+value={formData.serialNumber} onChange={handleChange} required /&gt;</p>
+
+<p class=MsoNormal>              &lt;/div&gt;</p>
+
+<p class=MsoNormal>            &lt;/div&gt;</p>
+
+<p class=MsoNormal>            &lt;div&gt;</p>
+
+<p class=MsoNormal>              &lt;Label&gt;Purchase Date&lt;/Label&gt;</p>
+
+<p class=MsoNormal>              &lt;Input type=&quot;date&quot;
+name=&quot;purchaseDate&quot; value={formData.purchaseDate}
+onChange={handleChange} required /&gt;</p>
+
+<p class=MsoNormal>            &lt;/div&gt;</p>
+
+<p class=MsoNormal>            &lt;div&gt;</p>
+
+<p class=MsoNormal>              &lt;Label&gt;Retailer Name&lt;/Label&gt;</p>
+
+<p class=MsoNormal>              &lt;Input name=&quot;retailer&quot;
+value={formData.retailer} onChange={handleChange} required /&gt;</p>
+
+<p class=MsoNormal>            &lt;/div&gt;</p>
+
+<p class=MsoNormal>            &lt;div&gt;</p>
+
+<p class=MsoNormal>              &lt;Label&gt;Upload Invoice
+(Optional)&lt;/Label&gt;</p>
+
+<p class=MsoNormal>              &lt;Input type=&quot;file&quot;
+name=&quot;invoice&quot; onChange={handleFileChange} /&gt;</p>
+
+<p class=MsoNormal>            &lt;/div&gt;</p>
+
+<p class=MsoNormal>            &lt;Button type=&quot;submit&quot;
+className=&quot;bg-blue-600 text-white py-2
+rounded-lg&quot;&gt;Submit&lt;/Button&gt;</p>
+
+<p class=MsoNormal>          &lt;/form&gt;</p>
+
+<p class=MsoNormal>        &lt;/CardContent&gt;</p>
+
+<p class=MsoNormal>      &lt;/Card&gt;</p>
+
+<p class=MsoNormal>    &lt;/div&gt;</p>
+
+<p class=MsoNormal>  );</p>
+
+<p class=MsoNormal>};</p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoNormal>export default ProductRegistration;</p>
+
+</div>
+
+</body>
+
+</html>
